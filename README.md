@@ -11,7 +11,6 @@ soon. kinda tangled in this whole making games with a game engine.
 I do have projects in mind for cpp.
 
 
-
 Coming back to the project at hand.
 this is done in python using pygame.
 was very fun to make and go through the math tbh.
