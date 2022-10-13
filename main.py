@@ -2,6 +2,7 @@ import pygame
 from sys import exit
 from math import sin,cos,pi
 from collections import deque
+from decimal import Decimal,localcontext
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -19,7 +20,7 @@ r1 , r2 = 60+m1,60+2*m2
 
 fix_x , fix_y = width/2,250
 
-angle1 , angle2 = pi/4 ,pi/4
+angle1 , angle2 = pi/2 ,pi/2
 
 angular_v1 , angular_v2 = 0 , 0
 
@@ -28,7 +29,6 @@ positions = deque()
 
 while True:
     denom1 = r1*(2*m1+m2-m2*cos(2*angle1-2*angle2))
-    denom2 = r2*(2*m1+m2-m2*cos(2*angle1-2*angle2))
 
     _1 = -g * (2 * m1 + m2) * sin(angle1)
     _2 = -m2 * g * sin(angle1-2*angle2)
@@ -36,7 +36,14 @@ while True:
     _4 = (angular_v2**2)*r2+(angular_v1**2)*r1*cos(angle1-angle2)
 
     angular_acc1 = (_1+_2+_3*_4)/denom1
-    angular_acc2 = 0
+
+    _1_ = 2*sin(angle1-angle2)
+    _2_ = (angular_v1**2)*r1*(m1+m2)
+    _3_ = g*(m1+m2)*cos(angle1)
+    _4_ = (angular_v2**2)*r2*m2*cos(angle1-angle2)
+    denom2 = r2*(2*m1+m2-m2*cos(2*angle1-2*angle2))
+
+    angular_acc2 =  _1_*(_2_ + _3_ + _4_)
 
     x1, y1 = r1 * sin(angle1) + fix_x, r1 * cos(angle1) + fix_y
     x2, y2 = (r2 * sin(angle2) + x1), (r2 * cos(angle2) + y1)
@@ -69,5 +76,5 @@ while True:
 
     angle1 += angular_v1
     angle2 += angular_v2
-
+    clock.tick(60)
     pygame.display.flip()
