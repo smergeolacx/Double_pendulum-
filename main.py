@@ -16,11 +16,11 @@ g = 1
 
 m1,m2 = 10,10
 
-r1 , r2 = 60+m1,60+2*m2
+r1 , r2 = 160+m1,160+2*m2
 
 fix_x , fix_y = width/2,250
 
-angle1 , angle2 = pi/2 ,pi/2
+angle1 , angle2 = pi/2 ,pi/4
 
 angular_v1 , angular_v2 = 0 , 0
 
@@ -43,7 +43,7 @@ while True:
     _4_ = (angular_v2**2)*r2*m2*cos(angle1-angle2)
     denom2 = r2*(2*m1+m2-m2*cos(2*angle1-2*angle2))
 
-    angular_acc2 =  _1_*(_2_ + _3_ + _4_)
+    angular_acc2 =  _1_*(_2_ + _3_ + _4_)/denom2
 
     x1, y1 = r1 * sin(angle1) + fix_x, r1 * cos(angle1) + fix_y
     x2, y2 = (r2 * sin(angle2) + x1), (r2 * cos(angle2) + y1)
@@ -60,7 +60,7 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-        # if event.type == trace:
+
     for i in positions:
         pygame.draw.circle(screen,"white",(i[0]+m2,i[1]+m2),1)
     # print(cir.x)
@@ -76,5 +76,8 @@ while True:
 
     angle1 += angular_v1
     angle2 += angular_v2
+
+    angular_v1*=0.9999
+    angular_v2*=0.9999
     clock.tick(60)
     pygame.display.flip()
